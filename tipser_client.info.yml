@@ -1,0 +1,5 @@
+name: Tipser Client
+type: module
+description: Provides the connection with Tipser API
+core: 8.x
+package: Other

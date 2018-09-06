@@ -1,0 +1,22 @@
+<a href="{{ article_url }}" id="article_url"></a>
+
+<script>
+    let pageWrapper = document.getElementById('page-wrapper');
+    if (pageWrapper) {
+        pageWrapper.style.display = 'none';
+    }
+</script>
+<script>
+    function tipserOnLoad() {
+        Drupal.behaviors.instyleInfiniteTipser.loadTipser(function () {
+            window.currentTipserProductId = '{{ productId }}';
+            Drupal.behaviors.instyleInfiniteTipser.openTipserProductDetailPage(window.currentTipserProductId);
+
+            Drupal.behaviors.instyleInfiniteTipser.tipserSDK.addDialogClosedListener(function() {
+                document.getElementById('article_url').click();
+            });
+        });
+    };
+    
+    window.addEventListener('load', tipserOnLoad, false );
+</script>

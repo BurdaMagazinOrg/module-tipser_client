@@ -1,0 +1,14 @@
+tipser_client.tipser_client_admin_form:
+  path: '/admin/config/services/tipser-client'
+  defaults:
+    _form: '\Drupal\tipser_client\Form\TipserClientAdminForm'
+    _title: 'Tipser Client'
+  requirements:
+    _permission: 'access administration pages'
+
+tipser_client.open_from_amp_page:
+  path: '/tipser-product/{productId}'
+  defaults:
+    _controller: '\Drupal\tipser_client\Controller\TipserProductController::show'
+  requirements:
+    _permission: 'access content'

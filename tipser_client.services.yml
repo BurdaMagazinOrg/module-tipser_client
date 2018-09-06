@@ -1,0 +1,12 @@
+services:
+  tipser_client:
+    class: Drupal\tipser_client\TipserClient
+    arguments:
+        - "@tipser_client.http_client"
+        - "@config.factory"
+  tipser_client.http_client:
+    class: GuzzleHttp\Client
+    factory: tipser_client.http_client_factory:fromOptions
+  tipser_client.http_client_factory:
+    class: Drupal\tipser_client\Http\TipserClientFactory
+    arguments: ['@http_handler_stack']
