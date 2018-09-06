@@ -1,0 +1,9 @@
+{
+  "name": "burdamagazinorg/tipser_client",
+  "description": "Provide tipser functionality.",
+  "type": "drupal-module",
+  "authors": [
+  ],
+  "minimum-stability": "dev",
+  "require": {}
+}
