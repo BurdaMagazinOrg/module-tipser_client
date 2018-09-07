@@ -84,8 +84,12 @@ function tipser_client_page_attachments_alter(array &$page) {
  *
  * @return bool
  *  true on success otherwise false or exception
+ * @throws Exception
  */
 function tipser_update_library_source($source, $target){
+  if ('' === $source) {
+    throw new \Exception('Tipser library source not set.');
+  }
 
   if(preg_match('/^https?:\/\//', $source)) {
     $client = Drupal::httpClient();
@@ -98,6 +102,7 @@ function tipser_update_library_source($source, $target){
   else {
     $response_body = $source;
   }
+
   $parts = explode('/', $target);
   array_pop($parts);
   $path = implode('/', $parts);
