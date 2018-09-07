@@ -44,8 +44,7 @@ function tipser_client_theme()
  */
 function tipser_client_preprocess_region__header_large(&$variables)
 {
-  $tipserIsActivated = (bool)\Drupal::config('tipser_client.config')->get('tipser_activated');
-  $variables['include_tipser_icon'] = $tipserIsActivated;
+  $variables['include_tipser_icon'] = \Drupal\tipser_client\TipserClient::isActivated();
 }
 
 function tipser_client_preprocess_html(&$variables)
@@ -56,6 +55,12 @@ function tipser_client_preprocess_html(&$variables)
         $htmlHead[0]['#attributes']['content'] = 'noindex, nofollow, noarchive, nosnippet, noodp, noydir, noimageindex, notranslate';
       }
     }
+  }
+
+    if (\Drupal\tipser_client\TipserClient::isActivated()) {
+      $variables['#attached']['drupalSettings']['tipser'] = [
+          'userid' => \Drupal::config('tipser_client.config')->get('tipser_pos'),
+      ];
   }
 }
 

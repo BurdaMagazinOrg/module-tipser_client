@@ -165,6 +165,15 @@ class TipserClient {
   }
 
   /**
+   * Check if tipser has been actiaved for this site.
+   *
+   * @return bool
+   */
+  public static function isActivated() {
+      return (bool) \Drupal::config('tipser_client.config')->get('tipser_activated');
+  }
+
+  /**
    * Fetch image from tipser / cloudinary. Try all image styles defined in TIPSER_IMAGE_STYLES
    * in descending order. If all fail, throw exception.
    *
