@@ -41,7 +41,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     }
   },
 
-  initTipser() {
+  initTipser(callback) {
     const tipserConfig = {
       userid: this.userid,
       primaryColor: '#222222',
@@ -74,8 +74,8 @@ Drupal.behaviors.instyleInfiniteTipser = {
     this.tipserSDK.addDialogClosedListener(this.closeDialog.bind(this));
     this.tipserSDK.addTrackEventListener(this.handleTipserTracking);
     this.tipserSDK.addThankYouPageClosedListener(this.onThankYouOverlayClose.bind(this));
-    window.dispatchEvent(new CustomEvent('tipser_sdk_loaded', { detail: { tipserSDK: this.tipserSDK } }));
     this.getCurrentCartSize();
+    if (callback) callback();
   },
 
   onToggleProductDialog(model) {

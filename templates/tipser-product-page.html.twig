@@ -8,7 +8,7 @@
 </script>
 <script>
     function tipserOnLoad() {
-        Drupal.behaviors.instyleInfiniteTipser.loadTipser(function () {
+        Drupal.behaviors.instyleInfiniteTipser.initTipser(function () {
             window.currentTipserProductId = '{{ productId }}';
             Drupal.behaviors.instyleInfiniteTipser.openTipserProductDetailPage(window.currentTipserProductId);
 
