@@ -48,6 +48,13 @@ class TipserClientAdminForm extends ConfigFormBase {
       '#default_value' => $config->get('tipser_activated'),
     );
 
+    $form['tipser_shopping_cart_icon_activated'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Activate tipser shopping cart icon'),
+      '#description' => $this->t('En- / Disable the tipser shopping cart.'),
+      '#default_value' => $config->get('tipser_shopping_cart_icon_activated'),
+    );
+
     $library_source = \Drupal::config('tipser_client.settings')->get('library_source');
     $library_source_description = [
       'The source of the tipser SDK library.',
@@ -143,6 +150,7 @@ class TipserClientAdminForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->updateTipserActivated($form_state);
+    $this->updateTipserShoppingCartIconActivated($form_state);
 
 
     $this->config('tipser_client.config')
@@ -185,6 +193,28 @@ class TipserClientAdminForm extends ConfigFormBase {
     }
     $config
       ->set('tipser_activated', $form_state->getValue('tipser_activated'))
+      ->save();
+
+    if ($invalidateCache) {
+      /** @var CacheTagsInvalidator $invalidator */
+      $invalidator = \Drupal::service('cache_tags.invalidator');
+      $invalidator->invalidateTags(['config:block.block.socialsblock']);
+    }
+  }
+
+  /**
+   * @param FormStateInterface $form_state
+   */
+  protected function updateTipserShoppingCartIconActivated(FormStateInterface $form_state): void
+  {
+    $config = $this->config('tipser_client.config');
+    $invalidateCache = false;
+    // if setting has changed we need to invalidate caches
+    if ($config->get('tipser_shopping_cart_icon_activated') !== $form_state->getValue('tipser_shopping_cart_icon_activated')) {
+      $invalidateCache = true;
+    }
+    $config
+      ->set('tipser_shopping_cart_icon_activated', $form_state->getValue('tipser_shopping_cart_icon_activated'))
       ->save();
 
     if ($invalidateCache) {
