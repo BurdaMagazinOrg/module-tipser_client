@@ -165,12 +165,21 @@ class TipserClient {
   }
 
   /**
-   * Check if tipser has been actiaved for this site.
+   * Check if tipser has been activated for this site.
    *
    * @return bool
    */
   public static function isActivated() {
       return (bool) \Drupal::config('tipser_client.config')->get('tipser_activated');
+  }
+
+  /**
+   * Check if tipser has been activated for this site.
+   *
+   * @return bool
+   */
+  public static function iconIsActivated() {
+      return (bool) \Drupal::config('tipser_client.config')->get('tipser_shopping_cart_icon_activated');
   }
 
   /**

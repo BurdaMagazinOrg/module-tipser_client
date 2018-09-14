@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\tipser_client\TipserClient;
 
 /**
  * Implements hook_help().
@@ -44,7 +45,7 @@ function tipser_client_theme()
  */
 function tipser_client_preprocess_region__header_large(&$variables)
 {
-  $variables['include_tipser_icon'] = \Drupal\tipser_client\TipserClient::isActivated();
+  $variables['include_tipser_icon'] = TipserClient::isActivated() && TipserClient::iconIsActivated();
 }
 
 function tipser_client_preprocess_html(&$variables)
@@ -57,7 +58,7 @@ function tipser_client_preprocess_html(&$variables)
     }
   }
 
-    if (\Drupal\tipser_client\TipserClient::isActivated()) {
+    if (TipserClient::isActivated()) {
       $variables['#attached']['drupalSettings']['tipser'] = [
           'userid' => \Drupal::config('tipser_client.config')->get('tipser_pos'),
       ];
