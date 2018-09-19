@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CartIcon from './CartIcon';
 import TipserLayer from './TipserLayer';
 
 class TipserIcon extends Component {
@@ -111,7 +110,6 @@ class TipserIcon extends Component {
             this.button = node;
           }}
         >
-          <CartIcon />
           { cartSize > 0 && (
             <span className="tipser__cart-size">
               { cartSize }
