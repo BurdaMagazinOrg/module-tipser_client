@@ -1,5 +1,5 @@
 frontend:
-  version: 1.1
+  version: 1.2
   js:
     js/tipser.js: {preprocess: false}
     js/dist/tipser.bundle.js: {preprocess: false}
