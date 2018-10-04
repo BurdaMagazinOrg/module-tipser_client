@@ -69,6 +69,10 @@ Drupal.behaviors.instyleInfiniteTipser = {
       redirectToQueryString: true,
     };
 
+    if (window.location.pathname.indexOf('/tipser-product/') === 0) {
+      this.thankYouRedirectUrl = new URL(window.location.href).searchParams.get("article");
+    }
+
       /* global TipserSDK */
     this.tipserSDK = new TipserSDK(this.userid, tipserConfig);
     this.tipserSDK.addDialogClosedListener(this.closeDialog.bind(this));
