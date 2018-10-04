@@ -1,22 +1,33 @@
 <a href="{{ article_url }}" id="article_url"></a>
 
 <script>
-    let pageWrapper = document.getElementById('page-wrapper');
-    if (pageWrapper) {
-        pageWrapper.style.display = 'none';
-    }
+  let pageWrapper = document.getElementById('page-wrapper');
+  if (pageWrapper) {
+    pageWrapper.style.display = 'none';
+  }
 </script>
 <script>
-    function tipserOnLoad() {
-        Drupal.behaviors.instyleInfiniteTipser.initTipser(function () {
-            window.currentTipserProductId = '{{ productId }}';
-            Drupal.behaviors.instyleInfiniteTipser.openTipserProductDetailPage(window.currentTipserProductId);
+  function tipserOnLoad() {
+    Drupal.behaviors.instyleInfiniteTipser.initTipser(function () {
+      // do not use custom logic when tipser thank you page is shown
+      if (window.location.search.indexOf('tipser_checkout=') > 0) {
+        return;
+      }
 
-            Drupal.behaviors.instyleInfiniteTipser.tipserSDK.addDialogClosedListener(function() {
-                document.getElementById('article_url').click();
-            });
-        });
-    };
-    
-    window.addEventListener('load', tipserOnLoad, false );
+      window.currentTipserProductId = '{{ productId }}';
+      Drupal.behaviors.instyleInfiniteTipser.openTipserProductDetailPage(window.currentTipserProductId);
+
+      Drupal.behaviors.instyleInfiniteTipser.tipserSDK.addDialogClosedListener(function () {
+        document.getElementById('article_url').click();
+      });
+    });
+  };
+
+  if (window.location.search.indexOf('tipser_checkout=') === -1) {
+    window.addEventListener('load', tipserOnLoad, false);
+  } else {
+    Drupal.behaviors.instyleInfiniteTipser.tipserSDK.addDialogClosedListener(function () {
+      document.getElementById('article_url').click();
+    });
+  }
 </script>
