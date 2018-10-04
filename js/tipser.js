@@ -21,7 +21,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
   userid: drupalSettings.tipser.userid,
   tipserSDK: null,
   tipserIconViewsArr: [],
-  thankYouRedirectUrl: '/',
+  thankYouRedirectUrl: null,
   attach(context) {
     jQuery('[data-provider="tipser"]', context).each((index, $element) => {
       /* eslint-disable no-new */
@@ -97,7 +97,9 @@ Drupal.behaviors.instyleInfiniteTipser = {
   },
 
   onThankYouOverlayClose() {
-    window.open(this.thankYouRedirectUrl, '_self');
+    if (this.thankYouRedirectUrl) {
+      window.open(this.thankYouRedirectUrl, '_self');
+    }
   },
 
   closeDialog() {
