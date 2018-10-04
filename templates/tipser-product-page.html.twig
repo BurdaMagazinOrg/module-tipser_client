@@ -8,15 +8,13 @@
 </script>
 <script>
   function tipserOnLoad() {
-    Drupal.behaviors.instyleInfiniteTipser.initTipser(function () {
       window.currentTipserProductId = '{{ productId }}';
       Drupal.behaviors.instyleInfiniteTipser.openTipserProductDetailPage(window.currentTipserProductId);
 
       Drupal.behaviors.instyleInfiniteTipser.tipserSDK.addDialogClosedListener(function () {
         document.getElementById('article_url').click();
       });
-    });
-  };
+  }
 
   if (window.location.search.indexOf('tipser_checkout=') === -1) {
     window.addEventListener('load', tipserOnLoad, false);
