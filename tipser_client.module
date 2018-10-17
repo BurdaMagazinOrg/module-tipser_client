@@ -71,7 +71,7 @@ function tipser_client_preprocess_html(&$variables)
  */
 function tipser_client_page_attachments_alter(array &$page) {
   $config = \Drupal::config('tipser_client.config');
-  if ($config->get('tipser_activated')) {
+  if ($config->get('tipser_activated') && false === \Drupal::service('router.admin_context')->isAdminRoute()) {
     $page['#attached']['library'][] = 'tipser_client/frontend';
   }
 }
