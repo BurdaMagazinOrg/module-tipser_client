@@ -22,6 +22,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
   tipserSDK: null,
   tipserIconViewsArr: [],
   thankYouRedirectUrl: null,
+  initialized: false,
   attach(context) {
     jQuery('[data-provider="tipser"]', context).each((index, $element) => {
       /* eslint-disable no-new */
@@ -42,6 +43,12 @@ Drupal.behaviors.instyleInfiniteTipser = {
   },
 
   initTipser(callback) {
+    // only initialize once
+    if (this.initialized) {
+      return;
+    }
+    this.initialized = true;
+
     const tipserConfig = {
       userid: this.userid,
       primaryColor: '#222222',
