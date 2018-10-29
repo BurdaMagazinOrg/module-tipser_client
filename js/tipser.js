@@ -38,6 +38,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     trackingObject = Object.assign({ event: 'tipserTracking' }, trackingObject);
 
     if (typeof window.dataLayer !== 'undefined') {
+      console.log('Tipser Tracking (tipser.js): ', trackingObject);
       window.dataLayer.push(trackingObject);
     }
   },
@@ -77,14 +78,18 @@ Drupal.behaviors.instyleInfiniteTipser = {
     };
 
     if (window.location.pathname.indexOf('/tipser-product/') === 0) {
-      this.thankYouRedirectUrl = new URL(window.location.href).searchParams.get("article");
+      this.thankYouRedirectUrl = new URL(window.location.href).searchParams.get(
+        'article'
+      );
     }
 
-      /* global TipserSDK */
+    /* global TipserSDK */
     this.tipserSDK = new TipserSDK(this.userid, tipserConfig);
     this.tipserSDK.addDialogClosedListener(this.closeDialog.bind(this));
     this.tipserSDK.addTrackEventListener(this.handleTipserTracking);
-    this.tipserSDK.addThankYouPageClosedListener(this.onThankYouOverlayClose.bind(this));
+    this.tipserSDK.addThankYouPageClosedListener(
+      this.onThankYouOverlayClose.bind(this)
+    );
     this.getCurrentCartSize();
     if (callback) callback();
   },
@@ -92,8 +97,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
   onToggleProductDialog(model) {
     if (model.get('pageOpen') === true) {
       this.openProductDialog(model.get('productId'));
-    }
-    else {
+    } else {
       this.closeDialog();
     }
   },
@@ -101,8 +105,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
   onToggleShoppingCartOverlay(model) {
     if (model.get('openShoppingCartOverlay') === true) {
       this.openPurchaseDialog();
-    }
-    else {
+    } else {
       this.closeDialog();
     }
   },
@@ -127,8 +130,10 @@ Drupal.behaviors.instyleInfiniteTipser = {
   },
 
   getCurrentCartSize() {
-    this.tipserSDK.getCurrentCartSize().then((cartSize) => {
-      window.dispatchEvent(new CustomEvent('tipser_cart_changed', { detail: { cartSize } }));
+    this.tipserSDK.getCurrentCartSize().then(cartSize => {
+      window.dispatchEvent(
+        new CustomEvent('tipser_cart_changed', { detail: { cartSize } })
+      );
     });
   },
 
