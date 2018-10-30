@@ -10,5 +10,6 @@ tipser_client.open_from_amp_page:
   path: '/tipser-product/{productId}'
   defaults:
     _controller: '\Drupal\tipser_client\Controller\TipserProductController::show'
+    _title_callback: '\Drupal\tipser_client\Controller\TipserProductController::setTitle'
   requirements:
     _permission: 'access content'
