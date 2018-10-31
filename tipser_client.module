@@ -48,6 +48,16 @@ function tipser_client_preprocess_region__header_large(&$variables)
   $variables['include_tipser_icon'] = TipserClient::isActivated() && TipserClient::iconIsActivated();
 }
 
+/**
+ * Implements hook_metatags_alter().
+ */
+function tipser_client_metatags_alter(array &$metatags, array &$context)
+{
+  if ('tipser_client.open_from_amp_page' === \Drupal::routeMatch()->getRouteName()) {
+    $metatags['title'] = '[current-page:title]';
+  }
+}
+
 function tipser_client_preprocess_html(&$variables)
 {
   if ('tipser_client.open_from_amp_page' === \Drupal::routeMatch()->getRouteName()) {
