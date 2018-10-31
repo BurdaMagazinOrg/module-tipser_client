@@ -36,11 +36,16 @@ class TipserProductController
       switch ($e[1]) {
         case 'node':
           $entity = Node::load($e[2]);
-          $title = $entity->getTitle();
+          $title = $entity->get('field_seo_title')->value;
           break;
         case 'taxonomy':
           $entity = Term::load($e[3]);
-          $title = $entity->getName();
+          $metaTags = unserialize($entity->get('field_meta_tags')->value);
+          if (isset($metaTags['title']) && strlen($metaTags['title'])) {
+            $title = $metaTags['title'];
+          } else {
+            $title = $entity->getName();
+          }
           break;
         default:
           return ['#markup' => ''];
