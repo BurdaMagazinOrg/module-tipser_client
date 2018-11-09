@@ -4,7 +4,7 @@ tipser_client.tipser_client_admin_form:
     _form: '\Drupal\tipser_client\Form\TipserClientAdminForm'
     _title: 'Tipser Client'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'edit tipser configuration'
 
 tipser_client.open_from_amp_page:
   path: '/tipser-product/{productId}'
