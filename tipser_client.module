@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Cache\Cache;
 use Drupal\tipser_client\TipserClient;
 
 /**
@@ -138,6 +139,7 @@ function tipser_update_library_source($source, $target){
   array_pop($parts);
   $path = implode('/', $parts);
   if (file_prepare_directory($path, FILE_CREATE_DIRECTORY)) {
+    Cache::invalidateTags(['library_info']);
     return (file_put_contents($target, $response_body) !== FALSE);
   }
 }
