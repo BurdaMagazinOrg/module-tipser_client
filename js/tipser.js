@@ -1,5 +1,5 @@
 const TipserProductView = Backbone.View.extend({
-  initialize(options) {
+  initialize: function(options) {
     this.model = new Backbone.Model({
       productId: null,
       pageOpen: false,
@@ -10,7 +10,7 @@ const TipserProductView = Backbone.View.extend({
   events: {
     click: 'handleClick',
   },
-  handleClick(e) {
+  handleClick: function(e) {
     const productId = e.currentTarget.getAttribute('data-product-id');
     this.model.set('productId', productId);
     this.openProductDialog(productId);
@@ -23,18 +23,20 @@ Drupal.behaviors.instyleInfiniteTipser = {
   tipserIconViewsArr: [],
   thankYouRedirectUrl: null,
   initialized: false,
-  attach(context) {
-    jQuery('[data-provider="tipser"]', context).each((index, $element) => {
-      /* eslint-disable no-new */
-      new TipserProductView({
-        el: $element,
-        openProductDialog: this.openProductDialog.bind(this),
-      });
-    });
+  attach: function(context) {
+    jQuery('[data-provider="tipser"]', context).each(
+      function(index, $element) {
+        /* eslint-disable no-new */
+        new TipserProductView({
+          el: $element,
+          openProductDialog: this.openProductDialog.bind(this),
+        });
+      }.bind(this)
+    );
     this.initTipser();
   },
 
-  handleTipserTracking(trackingObject) {
+  handleTipserTracking: function(trackingObject) {
     trackingObject = Object.assign({ event: 'tipserTracking' }, trackingObject);
 
     if (typeof window.dataLayer !== 'undefined') {
@@ -42,7 +44,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     }
   },
 
-  initTipser(callback) {
+  initTipser: function(callback) {
     // only initialize once
     if (this.initialized) {
       return;
@@ -77,62 +79,68 @@ Drupal.behaviors.instyleInfiniteTipser = {
     };
 
     if (window.location.pathname.indexOf('/tipser-product/') === 0) {
-      this.thankYouRedirectUrl = new URL(window.location.href).searchParams.get("article");
+      this.thankYouRedirectUrl = new URL(window.location.href).searchParams.get(
+        'article'
+      );
     }
 
-      /* global TipserSDK */
+    /* global TipserSDK */
     this.tipserSDK = new TipserSDK(this.userid, tipserConfig);
     this.tipserSDK.addDialogClosedListener(this.closeDialog.bind(this));
     this.tipserSDK.addTrackEventListener(this.handleTipserTracking);
-    this.tipserSDK.addThankYouPageClosedListener(this.onThankYouOverlayClose.bind(this));
+    this.tipserSDK.addThankYouPageClosedListener(
+      this.onThankYouOverlayClose.bind(this)
+    );
     this.getCurrentCartSize();
     if (callback) callback();
   },
 
-  onToggleProductDialog(model) {
+  onToggleProductDialog: function(model) {
     if (model.get('pageOpen') === true) {
       this.openProductDialog(model.get('productId'));
-    }
-    else {
+    } else {
       this.closeDialog();
     }
   },
 
-  onToggleShoppingCartOverlay(model) {
+  onToggleShoppingCartOverlay: function(model) {
     if (model.get('openShoppingCartOverlay') === true) {
       this.openPurchaseDialog();
-    }
-    else {
+    } else {
       this.closeDialog();
     }
   },
 
-  onThankYouOverlayClose() {
+  onThankYouOverlayClose: function() {
     if (this.thankYouRedirectUrl) {
       window.open(this.thankYouRedirectUrl, '_self');
     }
   },
 
-  closeDialog() {
+  closeDialog: function() {
     this.tipserSDK.closeDialog();
     this.getCurrentCartSize();
   },
 
-  openProductDialog(productId) {
+  openProductDialog: function(productId) {
     this.tipserSDK.openProductDialog(productId);
   },
 
-  openPurchaseDialog() {
+  openPurchaseDialog: function() {
     this.tipserSDK.openPurchaseDialog();
   },
 
-  getCurrentCartSize() {
-    this.tipserSDK.getCurrentCartSize().then((cartSize) => {
-      window.dispatchEvent(new CustomEvent('tipser_cart_changed', { detail: { cartSize } }));
+  getCurrentCartSize: function() {
+    this.tipserSDK.getCurrentCartSize().then(function(cartSize) {
+      window.dispatchEvent(
+        new CustomEvent('tipser_cart_changed', {
+          detail: { cartSize: cartSize },
+        })
+      );
     });
   },
 
-  openTipserProductDetailPage(productId) {
+  openTipserProductDetailPage: function(productId) {
     this.openProductDialog(productId);
   },
 };
