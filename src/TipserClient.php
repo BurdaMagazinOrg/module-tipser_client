@@ -157,7 +157,7 @@ class TipserClient {
     }
 
     if (!in_array($image->getHeader('content-type')[0], array('image/png', 'image/jpeg'))) {
-      $error_msg = 'Error Message: Unexpected content type "' . $image->getHeader('content-type') . '"';
+      $error_msg = 'Error Message: Unexpected content type "' . $image->getHeader('content-type')[0] . '"';
       throw new \Exception($error_msg);
     }
 
