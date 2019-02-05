@@ -55,7 +55,7 @@ function drush_tipser_client_tipser_categories() {
   }
 
   $tipser_api = \Drupal::config('tipser_client.config')->get('tipser_api');
-  $location = $tipser_api . '/categories?market=de';
+  $location = $tipser_api . '/v4/categories?market=de';
   try {
     $json = \Drupal::httpClient()
       ->get($location)
