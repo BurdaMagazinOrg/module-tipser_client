@@ -96,7 +96,7 @@ class TipserClient {
       $result['name'] = $result['title'];
 
       $result['oldprice'] = '';
-      if (isset($result['categories']) && isset($result['categories'][0]) && isset($result['categories'][0]['productType'])) {
+      if (isset($result['categories']) && isset($result['categories'][0]) && isset($result['categories'][0])) {
         $category = FALSE;
         if (isset($result['categories'][0]['productType'])) {
           $category = $result['categories'][0]['productType'];
