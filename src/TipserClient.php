@@ -97,12 +97,23 @@ class TipserClient {
 
       $result['oldprice'] = '';
       if (isset($result['categories']) && isset($result['categories'][0]) && isset($result['categories'][0]['productType'])) {
-        $result['category'] = $result['categories'][0]['productType'];
-        $vocabulary_id = $this->config->get('vocabulary');
-        if ($vocabulary_id) {
-          $term = advertising_products_find_term($vocabulary_id, $result['category']);
-          if ($term) {
-            $result['category_target_id'] = $term->id();
+        $category = FALSE;
+        if (isset($result['categories'][0]['productType'])) {
+          $category = $result['categories'][0]['productType'];
+        }
+        else if (isset($result['categories'][0]['section'])) {
+          $category = $result['categories'][0]['section'];
+        }
+        else if (isset($result['categories'][0]['department'])) {
+          $category = $result['categories'][0]['department'];
+        }
+        if ($category) {
+          $vocabulary_id = $this->config->get('vocabulary');
+          if ($vocabulary_id) {
+            $term = advertising_products_find_term($vocabulary_id, $result['category']);
+            if ($term) {
+              $result['category_target_id'] = $term->id();
+            }
           }
         }
       }
