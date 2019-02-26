@@ -110,7 +110,7 @@ class TipserClient {
         if ($category) {
           $vocabulary_id = $this->config->get('vocabulary');
           if ($vocabulary_id) {
-            $term = advertising_products_find_term($vocabulary_id, $result['category']);
+            $term = advertising_products_find_term($vocabulary_id, $category);
             if ($term) {
               $result['category_target_id'] = $term->id();
             }
