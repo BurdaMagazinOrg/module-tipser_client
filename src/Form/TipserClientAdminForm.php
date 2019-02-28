@@ -86,6 +86,19 @@ class TipserClientAdminForm extends ConfigFormBase {
       '#default_value' => $config->get('tipser_api'),
     );
 
+    $environments = [
+      'prod' => $this->t('Production'),
+      'stage' => $this->t('Staging'),
+      'dev' => $this->t('Development'),
+    ];
+    $form['tipser_env'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('Tipser Environment'),
+      '#description' => $this->t('Choose the Tipser Environment.'),
+      '#options' => $environments,
+      '#default_value' => $config->get('tipser_env'),
+    );
+
     $form['tipser_pos'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Tipser key'),
@@ -161,6 +174,9 @@ class TipserClientAdminForm extends ConfigFormBase {
       ->save();
     $this->config('tipser_client.config')
       ->set('tipser_apikey', $form_state->getValue('tipser_apikey'))
+      ->save();
+    $this->config('tipser_client.config')
+      ->set('tipser_env', $form_state->getValue('tipser_env'))
       ->save();
     $this->config('tipser_client.config')
       ->set('shop_url', $form_state->getValue('shop_url'))

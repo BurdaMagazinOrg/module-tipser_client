@@ -19,6 +19,7 @@ const TipserProductView = Backbone.View.extend({
 
 Drupal.behaviors.instyleInfiniteTipser = {
   userid: drupalSettings.tipser.userid,
+  env: drupalSettings.tipser.env,
   tipserSDK: null,
   tipserIconViewsArr: [],
   thankYouRedirectUrl: null,
@@ -52,6 +53,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     this.initialized = true;
 
     const tipserConfig = {
+      env: this.env,
       userid: this.userid,
       primaryColor: '#222222',
       gtl: {
