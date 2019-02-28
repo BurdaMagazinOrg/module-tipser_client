@@ -12,8 +12,7 @@ use Drupal\tipser_client\TipserClient;
 /**
  * Implements hook_help().
  */
-function tipser_client_help($route_name, RouteMatchInterface $route_match)
-{
+function tipser_client_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.tipser_client':
       $output = '';
@@ -29,8 +28,7 @@ function tipser_client_help($route_name, RouteMatchInterface $route_match)
 /**
  * Implements hook_theme().
  */
-function tipser_client_theme()
-{
+function tipser_client_theme() {
   return [
     'tipser_product_page' => [
       'variables' => [
@@ -44,8 +42,7 @@ function tipser_client_theme()
 /**
  * Implements hook_preprocess_region() for header_large.
  */
-function tipser_client_preprocess_region__header_large(&$variables)
-{
+function tipser_client_preprocess_region__header_large(&$variables) {
   $variables['include_tipser_icon'] = TipserClient::isActivated() && TipserClient::iconIsActivated();
 }
 
@@ -67,15 +64,13 @@ function tipser_client_library_info_alter(&$libraries, $extension) {
  *
  * Implements hook_metatags_alter().
  */
-function tipser_client_metatags_alter(array &$metatags, array &$context)
-{
+function tipser_client_metatags_alter(array &$metatags, array &$context) {
   if ('tipser_client.open_from_amp_page' === \Drupal::routeMatch()->getRouteName()) {
     $metatags['title'] = '[current-page:title]';
   }
 }
 
-function tipser_client_preprocess_html(&$variables)
-{
+function tipser_client_preprocess_html(&$variables) {
   if ('tipser_client.open_from_amp_page' === \Drupal::routeMatch()->getRouteName()) {
     foreach ($variables['page']['#attached']['html_head'] as $i => &$htmlHead) {
       if (isset($htmlHead[1]) && $htmlHead[1] === 'robots') {
@@ -84,10 +79,10 @@ function tipser_client_preprocess_html(&$variables)
     }
   }
 
-    if (TipserClient::isActivated()) {
-      $variables['#attached']['drupalSettings']['tipser'] = [
-          'userid' => \Drupal::config('tipser_client.config')->get('tipser_pos'),
-      ];
+  if (TipserClient::isActivated()) {
+    $variables['#attached']['drupalSettings']['tipser'] = [
+      'userid' => \Drupal::config('tipser_client.config')->get('tipser_pos'),
+    ];
   }
 }
 
