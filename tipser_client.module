@@ -82,6 +82,7 @@ function tipser_client_preprocess_html(&$variables) {
   if (TipserClient::isActivated()) {
     $variables['#attached']['drupalSettings']['tipser'] = [
       'userid' => \Drupal::config('tipser_client.config')->get('tipser_pos'),
+      'env' => \Drupal::config('tipser_client.config')->get('tipser_env'),
     ];
   }
 }
