@@ -32,18 +32,23 @@ class TipserClient {
     '250x',
   ];
 
+  /**
+   * Mutable config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $config;
+
   /** @var  ClientInterface */
   protected $httpClient;
-
-  protected $config;
 
   /**
    * @param \GuzzleHttp\ClientInterface $httpClient
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    */
-  public function __construct(ClientInterface $httpClient,  ConfigFactoryInterface $configFactory) {
+  public function __construct(ClientInterface $httpClient, ConfigFactoryInterface $configFactory) {
     $this->httpClient = $httpClient;
-    $this->config = $configFactory->get('tipser_client.config');
+    $this->config = $configFactory->getEditable('tipser_client.config');
   }
 
 
@@ -55,8 +60,7 @@ class TipserClient {
    * @throws GuzzleException
    */
   protected function callAPI($params, $items, &$messages) {
-    $client_config = \Drupal::config('tipser_client.config');
-    $tipser_pos = $client_config->get('tipser_pos');
+    $tipser_pos = $this->config->get('tipser_pos');
 
     if (isset($params['product_id'])) {
       $url = '/v4/products/';
@@ -238,4 +242,19 @@ class TipserClient {
       return $this->fetchImage($product, $imageStyleI + 1);
     }
   }
+
+  /**
+   * Override tipser_client.config config.
+   *
+   * @param array $config
+   *
+   * @return \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  public function setConfig(array $config) {
+    foreach ($config as $key => $value) {
+      $this->config->set($key, $value);
+    }
+    return $this->config;
+  }
+
 }
