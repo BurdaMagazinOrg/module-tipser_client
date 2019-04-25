@@ -4,7 +4,7 @@ namespace Drupal\Tests\tipser_client\Unit;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Tests\UnitTestCase;
-use Drupal\visenze_tagging\VisenzeTagging;
+use Drupal\tipser_client\TipserClient;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -78,7 +78,7 @@ class TipserClientTest extends UnitTestCase {
    */
   public function testcallAPI() {
 
-    $body = file_get_contents(__DIR__ . '/Mocks/tipser-reply.json');
+    $body = file_get_contents(__DIR__ . '/Mocks/kleid.json');
     // This sets up the mock client to respond to the first request it gets
     // with an HTTP 200 containing your mock json body.
     $this->mockHandler->append(new Response(200, [], $body));
@@ -91,9 +91,10 @@ class TipserClientTest extends UnitTestCase {
     $params = $items = $messages = [];
     $params['product_id'] = '1234';
     $tipser_response = $tipser->callAPI($params, $items, $messages);
+    $tipser_result  = Json::decode($tipser_response->getBody());
 
-    $this->assertNotEmpty($tipser_response);
+    $this->assertNotEmpty($tipser_result);
     $this->assertNotEmpty($messages['url']);
-    $this->assertEquals($tipser_response, Json::decode($body));
+    $this->assertEquals($tipser_result, Json::decode($body));
   }
 }
