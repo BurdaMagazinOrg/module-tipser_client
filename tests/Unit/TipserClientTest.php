@@ -76,7 +76,7 @@ class TipserClientTest extends UnitTestCase {
   /**
    * Test the callAPI method.
    */
-  public function testcallAPI() {
+  public function testCallAPI() {
 
     $body = file_get_contents(__DIR__ . '/Mocks/kleid.json');
     // This sets up the mock client to respond to the first request it gets
