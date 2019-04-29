@@ -59,7 +59,7 @@ class TipserClient {
    * @return \Psr\Http\Message\ResponseInterface
    * @throws GuzzleException
    */
-  protected function callAPI($params, $items, &$messages) {
+  public function callAPI($params, $items, &$messages) {
     $tipser_pos = $this->config->get('tipser_pos');
 
     if (isset($params['product_id'])) {
