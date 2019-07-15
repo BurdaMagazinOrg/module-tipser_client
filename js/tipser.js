@@ -11,9 +11,11 @@ const TipserProductView = Backbone.View.extend({
     click: 'handleClick'
   },
   handleClick: function(e) {
+    e.stopPropagation();
     const productId = e.currentTarget.getAttribute('data-product-id');
     this.model.set('productId', productId);
     this.openProductDialog(productId);
+    return false;
   }
 });
 
