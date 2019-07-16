@@ -11,8 +11,8 @@ const TipserProductView = Backbone.View.extend({
     click: 'handleClick'
   },
   handleClick: function(e) {
-    e.preventDefault();
     const productId = e.currentTarget.getAttribute('data-product-id');
+    e.preventDefault();
     this.model.set('productId', productId);
     this.openProductDialog(productId);
     return false;
