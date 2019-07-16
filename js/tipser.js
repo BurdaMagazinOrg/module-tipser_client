@@ -27,8 +27,9 @@ Drupal.behaviors.instyleInfiniteTipser = {
   thankYouRedirectUrl: null,
   initialized: false,
   attach: function(context) {
-    jQuery('[data-provider="tipser"]', context)
-      .addBack()
+    const tipserSelector = '[data-provider="tipser"]';
+    jQuery(tipserSelector, context)
+      .addBack(tipserSelector)
       .each(
         function(index, $element) {
           /* eslint-disable no-new */
