@@ -2,19 +2,21 @@ const TipserProductView = Backbone.View.extend({
   initialize: function(options) {
     this.model = new Backbone.Model({
       productId: null,
-      pageOpen: false,
+      pageOpen: false
     });
 
     this.openProductDialog = options.openProductDialog;
   },
   events: {
-    click: 'handleClick',
+    click: 'handleClick'
   },
   handleClick: function(e) {
     const productId = e.currentTarget.getAttribute('data-product-id');
+    e.preventDefault();
     this.model.set('productId', productId);
     this.openProductDialog(productId);
-  },
+    return false;
+  }
 });
 
 Drupal.behaviors.instyleInfiniteTipser = {
@@ -33,7 +35,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
           /* eslint-disable no-new */
           new TipserProductView({
             el: $element,
-            openProductDialog: this.openProductDialog.bind(this),
+            openProductDialog: this.openProductDialog.bind(this)
           });
         }.bind(this)
       );
@@ -60,17 +62,17 @@ Drupal.behaviors.instyleInfiniteTipser = {
       userid: this.userid,
       primaryColor: '#222222',
       gtl: {
-        hideText: 'false',
+        hideText: 'false'
       },
       defaultLang: 'de',
       market: 'DE',
       shop: {
         listMenuPosition: 'left',
         hideFooter: 0,
-        imgSize: 2,
+        imgSize: 2
       },
       tab: {
-        hide: 1,
+        hide: 1
       },
       modalUi: {
         hideSearchIcon: true,
@@ -78,9 +80,9 @@ Drupal.behaviors.instyleInfiniteTipser = {
         hideCartIcon: true,
         hideMoreIcon: true,
         hideSimilarProducts: true,
-        useCustomCss: true,
+        useCustomCss: true
       },
-      redirectToQueryString: true,
+      redirectToQueryString: true
     };
 
     if (window.location.pathname.indexOf('/tipser-product/') === 0) {
@@ -139,7 +141,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     this.tipserSDK.getCurrentCartSize().then(function(cartSize) {
       window.dispatchEvent(
         new CustomEvent('tipser_cart_changed', {
-          detail: { cartSize: cartSize },
+          detail: { cartSize: cartSize }
         })
       );
     });
@@ -147,5 +149,5 @@ Drupal.behaviors.instyleInfiniteTipser = {
 
   openTipserProductDetailPage: function(productId) {
     this.openProductDialog(productId);
-  },
+  }
 };
