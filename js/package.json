@@ -39,6 +39,6 @@
     "babel-loader": "^7.1.5",
     "babel-preset-react": "^6.24.1",
     "eslint-plugin-es": "^1.4.0",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "webpack-bundle-analyzer": "^3.4.1"
   }
 }
