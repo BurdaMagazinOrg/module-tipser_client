@@ -69,7 +69,6 @@ class TipserClient {
 
     $options = [];
     $options['query'] = [
-      'market' => 'de',
       'pos' => $tipser_pos,
     ];
     $messages['url'] = $url;
@@ -89,11 +88,12 @@ class TipserClient {
    */
   public function queryProducts($query, $items = TipserClient::TIPSER_CLIENT_MAX_ITEMS) {
     $active_products = array();
+    $tipser_market = \Drupal::config('tipser_client.config')->get('market');
     $data = $this->callAPI($query, $items, $messages);
     $result = Json::decode($data->getBody());
     \Drupal::logger('tipser')->notice('Result @message', array('@message' => print_r($result, TRUE)));
 
-    if(isset($result['id'])){
+    if(isset($result['id']) && $result['market'] == $tipser_market){
       $shop_url = $this->config->get('shop_url');
       $result['detailpageurl'] = $shop_url . '/products/' . $result['id'];
       $result['shop'] = '';
