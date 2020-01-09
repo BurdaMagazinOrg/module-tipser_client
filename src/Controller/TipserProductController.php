@@ -17,8 +17,8 @@ class TipserProductController
       '#article_url' => $_GET['article'],
     ];
 
-    if (isset($_GET['nid']) && is_numeric($_GET['nid']) && $nid = $_GET['nid']) {
-      $entity = Node::load($nid);
+    if (isset($_GET['parent_id']) && is_numeric($_GET['parent_id']) && $parent_id = $_GET['parent_id']) {
+      $entity = Node::load($parent_id);
       $view_mode = 'full';
       $datalayer_variables = infinite_datalayer_get_variables($entity, $view_mode);
       infinite_datalayer_add($build, $entity->uuid(), $datalayer_variables);
