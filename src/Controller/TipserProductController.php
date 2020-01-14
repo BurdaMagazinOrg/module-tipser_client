@@ -19,7 +19,7 @@ class TipserProductController
 
     if (
       (isset($_GET['parent_id']) && is_numeric($_GET['parent_id']) && $parent_id = $_GET['parent_id']) &&
-      (isset($_GET['parent_type']) && is_numeric($_GET['parent_type']) && $parent_type = $_GET['parent_type'])
+      (isset($_GET['parent_type']) && is_string($_GET['parent_type']) && $parent_type = $_GET['parent_type'])
     ) {
       if (
         ($parent_type == 'node' && $entity = Node::load($parent_id))
