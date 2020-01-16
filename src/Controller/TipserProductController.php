@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Path\AliasManager;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
 
 class TipserProductController
 {
@@ -24,7 +25,9 @@ class TipserProductController
       if (
         ($parent_type == 'node' && $entity = Node::load($parent_id))
         ||
-        ($parent_type == 'term' && $entity = Term::load($parent_id))
+        ($parent_type == 'taxonomy_term' && $entity = Term::load($parent_id))
+        ||
+        ($parent_type == 'user' && $entity = User::load($parent_id))
       ) {
         $view_mode = 'full';
         $datalayer_variables = infinite_datalayer_get_variables($entity, $view_mode);
