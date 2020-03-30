@@ -121,7 +121,7 @@ class TipserClient {
           }
         }
       }
-      if (isset($result['discountPriceIncVat']['value']) && $result['discountPriceIncVat']['value'] > 0) {
+      if (isset($result['discountPriceIncVat']['value']) && $result['discountPriceIncVat']['value'] >= 0) {
         $result['cross_price'] = $result['priceIncVat']['value'];
         $result['currency'] = $result['priceIncVat']['currency'];
         $result['formattedprice'] = $result['discountPriceIncVat']['formatted'];
