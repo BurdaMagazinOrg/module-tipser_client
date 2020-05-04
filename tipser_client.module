@@ -50,12 +50,22 @@ function tipser_client_preprocess_region__header_large(&$variables) {
  * Implements hook_library_info_alter().
  */
 function tipser_client_library_info_alter(&$libraries, $extension) {
-  if (isset($libraries['frontend']) && isset($libraries['frontend']['js']['js/tipser.js'])) {
-    if (file_exists('public://tipser/tipser.sdk.js')) {
+
+  // Set correct site_path for tipser-sdk JS.
+  if (isset($libraries['tipser-sdk'])
+    && isset($libraries['tipser-sdk']['js']['/sites/default/files/tipser/tipser.sdk.js'])) {
+
+    $site_path = \Drupal::service('site.path');
+    $libraries['tipser-sdk']['js']['/' . $site_path . '/files/tipser/tipser.sdk.js'];
+  }
+
+  // Set version for tipser frontend library from sdk.js timestamp.
+  if (isset($libraries['frontend'])
+    && isset($libraries['frontend']['js']['js/tipser.js'])
+    && file_exists('public://tipser/tipser.sdk.js')) {
+
       $date = filemtime('public://tipser/tipser.sdk.js');
-      // we replace the version string by a date timestamp
       $libraries['frontend']['version'] = $date;
-    }
   }
 }
 
