@@ -1,12 +1,8 @@
 frontend:
-  version: 1.4.2
+  version: 1.4.1
   js:
     js/tipser.js: { preprocess: false }
     js/dist/tipser.bundle.js: { preprocess: false }
+    /sites/default/files/tipser/tipser.sdk.js: { preprocess: false }
   dependencies:
     - core/backbone
-    - tipser_client/tipser-sdk
-
-tipser-sdk:
-  js:
-    /sites/default/files/tipser/tipser.sdk.js: { preprocess: false }
