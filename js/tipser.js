@@ -15,7 +15,7 @@ const TipserProductView = Backbone.View.extend({
     e.preventDefault();
     this.model.set('productId', productId);
     this.openProductDialog(productId);
-    return false;
+    return !e.currentTarget.getAttribute('data-external-url');
   },
 });
 
