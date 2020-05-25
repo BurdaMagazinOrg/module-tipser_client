@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Drupal\tipser_client\Exception;
 
-class ImportException extends \Exception
-{
+/**
+ * Tipser client import exception.
+ */
+class ImportException extends \Exception {
 
 }

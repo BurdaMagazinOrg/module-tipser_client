@@ -3,15 +3,27 @@
 namespace Drupal\tipser_client\Controller;
 
 use Drupal\Component\Utility\Xss;
-use Drupal\Core\Path\AliasManager;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
 
-class TipserProductController
-{
-  public function show($productId)
-  {
+/**
+ * Class TipserProductController.
+ *
+ * @package Drupal\tipser_client\Controller
+ */
+class TipserProductController {
+
+  /**
+   * Show tipser product with related article URL.
+   *
+   * @param int $productId
+   *   The tipser product ID.
+   *
+   * @return array
+   *   Render array for tipser product page.
+   */
+  public function show($productId) {
     $build = [
       '#theme' => 'tipser_product_page',
       '#productId' => $productId,
@@ -34,20 +46,26 @@ class TipserProductController
         infinite_datalayer_add($build, $entity->uuid(), $datalayer_variables);
       }
     }
-
     return $build;
   }
 
-  public function setTitle()
-  {
+  /**
+   * Get title from node or term entity.
+   *
+   * @return array|string[]
+   *   Return title of node or term as markup render array.
+   */
+  public function setTitle() {
     $title = \Drupal::request()->query->get('title');
-    if (null === $title) {
-      // try to load the node / page / term and get the title from there
+    if (NULL === $title) {
+
+      // Try to load the node / page / term and get the title from there.
       $alias = explode($_SERVER['HTTP_HOST'], \Drupal::request()->query->get('article'))[1];
-      if (null === $alias) {
+      if (NULL === $alias) {
         return ['#markup' => ''];
       }
-      /** @var AliasManager $aliasManager */
+
+      /** @var \Drupal\Core\Path\AliasManager $aliasManager */
       $aliasManager = \Drupal::service('path.alias_manager');
       $path = $aliasManager->getPathByAlias($alias);
       $e = explode('/', $path);
@@ -56,19 +74,23 @@ class TipserProductController
           $entity = Node::load($e[2]);
           $title = $entity->get('field_seo_title')->value;
           break;
+
         case 'taxonomy':
           $entity = Term::load($e[3]);
           $metaTags = unserialize($entity->get('field_meta_tags')->value);
           if (isset($metaTags['title']) && strlen($metaTags['title'])) {
             $title = $metaTags['title'];
-          } else {
+          }
+          else {
             $title = $entity->getName();
           }
           break;
+
         default:
           return ['#markup' => ''];
       }
     }
     return ['#markup' => $title, '#allowed_tags' => Xss::getHtmlTagList()];
   }
+
 }

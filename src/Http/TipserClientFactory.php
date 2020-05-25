@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\tipser_client\Http\TCClientFactory.
- */
-
 namespace Drupal\tipser_client\Http;
 
 use Drupal\Component\Utility\NestedArray;

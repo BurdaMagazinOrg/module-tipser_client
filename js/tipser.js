@@ -1,5 +1,5 @@
 const TipserProductView = Backbone.View.extend({
-  initialize: function(options) {
+  initialize: function (options) {
     this.model = new Backbone.Model({
       productId: null,
       pageOpen: false,
@@ -10,7 +10,7 @@ const TipserProductView = Backbone.View.extend({
   events: {
     click: 'handleClick',
   },
-  handleClick: function(e) {
+  handleClick: function (e) {
     const productId = e.currentTarget.getAttribute('data-product-id');
     e.preventDefault();
     this.model.set('productId', productId);
@@ -26,12 +26,12 @@ Drupal.behaviors.instyleInfiniteTipser = {
   tipserIconViewsArr: [],
   thankYouRedirectUrl: null,
   initialized: false,
-  attach: function(context) {
+  attach: function (context) {
     const tipserSelector = '[data-provider="tipser"]';
     jQuery(tipserSelector, context)
       .addBack(tipserSelector)
       .each(
-        function(index, $element) {
+        function (index, $element) {
           /* eslint-disable no-new */
           new TipserProductView({
             el: $element,
@@ -42,7 +42,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     this.initTipser();
   },
 
-  handleTipserTracking: function(trackingObject) {
+  handleTipserTracking: function (trackingObject) {
     trackingObject = Object.assign({ event: 'tipserTracking' }, trackingObject);
 
     if (typeof window.dataLayer !== 'undefined') {
@@ -50,7 +50,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     }
   },
 
-  initTipser: function(callback) {
+  initTipser: function (callback) {
     // only initialize once
     if (this.initialized) {
       return;
@@ -99,10 +99,11 @@ Drupal.behaviors.instyleInfiniteTipser = {
       this.onThankYouOverlayClose.bind(this)
     );
     this.getCurrentCartSize();
-    if (callback) callback();
+    if (callback) { callback();
+    }
   },
 
-  onToggleProductDialog: function(model) {
+  onToggleProductDialog: function (model) {
     if (model.get('pageOpen') === true) {
       this.openProductDialog(model.get('productId'));
     } else {
@@ -110,7 +111,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     }
   },
 
-  onToggleShoppingCartOverlay: function(model) {
+  onToggleShoppingCartOverlay: function (model) {
     if (model.get('openShoppingCartOverlay') === true) {
       this.openPurchaseDialog();
     } else {
@@ -118,13 +119,13 @@ Drupal.behaviors.instyleInfiniteTipser = {
     }
   },
 
-  onThankYouOverlayClose: function() {
+  onThankYouOverlayClose: function () {
     if (this.thankYouRedirectUrl) {
       window.open(this.thankYouRedirectUrl, '_self');
     }
   },
 
-  closeDialog: function() {
+  closeDialog: function () {
     this.tipserSDK.closeDialog();
     this.getCurrentCartSize();
     /**
@@ -134,16 +135,16 @@ Drupal.behaviors.instyleInfiniteTipser = {
     !!window.Blazy && new window.Blazy();
   },
 
-  openProductDialog: function(productId) {
+  openProductDialog: function (productId) {
     this.tipserSDK.openProductDialog(productId);
   },
 
-  openPurchaseDialog: function() {
+  openPurchaseDialog: function () {
     this.tipserSDK.openPurchaseDialog();
   },
 
-  getCurrentCartSize: function() {
-    this.tipserSDK.getCurrentCartSize().then(function(cartSize) {
+  getCurrentCartSize: function () {
+    this.tipserSDK.getCurrentCartSize().then(function (cartSize) {
       window.dispatchEvent(
         new CustomEvent('tipser_cart_changed', {
           detail: { cartSize: cartSize },
@@ -152,7 +153,7 @@ Drupal.behaviors.instyleInfiniteTipser = {
     });
   },
 
-  openTipserProductDetailPage: function(productId) {
+  openTipserProductDetailPage: function (productId) {
     this.openProductDialog(productId);
   },
 };

@@ -5,7 +5,6 @@
  * Drush integration for the tipser client module.
  */
 
-
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\taxonomy\Entity\Term;
 
@@ -15,18 +14,16 @@ use GuzzleHttp\Exception\RequestException;
  * Implements hook_drush_command().
  */
 function tipser_client_drush_command() {
-  $items = array();
+  $items = [];
 
-  $items['tipser-categories'] = array(
+  $items['tipser-categories'] = [
     'description' => dt('Create and upate the tipser categories on the current site.'),
-    'options' => array(
-    ),
-    'drupal dependencies' => array('tipser_client'),
-  );
+    'options' => [],
+    'drupal dependencies' => ['tipser_client'],
+  ];
 
   return $items;
 }
-
 
 /**
  * Implements hook_drush_help().
@@ -73,11 +70,11 @@ function drush_tipser_client_tipser_categories() {
       }
       else {
         $department_term = Term::create([
-                             'name' => $department->name,
-                             'status' => 0,
-                             'field_original_id' => $department->id,
-                             'vid' => $vocabulary_id,
-                           ]);
+          'name' => $department->name,
+          'status' => 0,
+          'field_original_id' => $department->id,
+          'vid' => $vocabulary_id,
+        ]);
       }
       $department_term->save();
       foreach ($department->sections as $sdx => $section) {
@@ -88,13 +85,13 @@ function drush_tipser_client_tipser_categories() {
           }
           else {
             $section_term = Term::create([
-                              'name' => $section->name,
-                              'status' => 0,
-                              'field_original_id' => $section->id,
-                              'vid' => $vocabulary_id,
-                            ]);
+              'name' => $section->name,
+              'status' => 0,
+              'field_original_id' => $section->id,
+              'vid' => $vocabulary_id,
+            ]);
           }
-          $section_term->parent = array($department_term->id());
+          $section_term->parent = [$department_term->id()];
           $section_term->save();
           foreach ($section->categories as $cdx => $category) {
             if ($category->name) {
@@ -104,13 +101,13 @@ function drush_tipser_client_tipser_categories() {
               }
               else {
                 $term = Term::create([
-                          'name' => $category->name,
-                          'status' => 0,
-                          'field_original_id' => $category->id,
-                          'vid' => $vocabulary_id
-                        ]);
+                  'name' => $category->name,
+                  'status' => 0,
+                  'field_original_id' => $category->id,
+                  'vid' => $vocabulary_id,
+                ]);
               }
-              $term->parent = array($section_term->id());
+              $term->parent = [$section_term->id()];
               $term->save();
             }
           }
