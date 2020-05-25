@@ -57,7 +57,7 @@ class TipserClientAdminForm extends ConfigFormBase {
       'To download the new SDK source you have to check the "Update tipser SDK" checkbox below.',
     ];
 
-    $description = implode(' ', $library_source_description));
+    $description = implode(' ', $library_source_description);
     $form['library_source'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Tipser SDK source'),
