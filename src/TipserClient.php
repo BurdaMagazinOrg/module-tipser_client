@@ -60,15 +60,13 @@ class TipserClient {
    *   The params array.
    * @param int $items
    *   Unused variable.
-   * @param array $messages
-   *   The messages array.
    *
    * @return \Psr\Http\Message\ResponseInterface
    *   The HTTP response.
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  protected function callApi(array $params, $items, array &$messages) {
+  protected function callApi(array $params, $items) {
     $tipser_pos = $this->config->get('tipser_pos');
 
     if (isset($params['product_id'])) {
@@ -80,7 +78,6 @@ class TipserClient {
     $options['query'] = [
       'pos' => $tipser_pos,
     ];
-    $messages['url'] = $url;
 
     return $this->httpClient->request('GET', $url, $options);
   }
@@ -101,7 +98,7 @@ class TipserClient {
   public function queryProducts($query, $items = TipserClient::TIPSER_CLIENT_MAX_ITEMS) {
     $active_products = [];
     $tipser_market = \Drupal::config('tipser_client.config')->get('market');
-    $data = $this->callApi($query, $items, $messages);
+    $data = $this->callApi($query, $items);
     $result = Json::decode($data->getBody());
     \Drupal::logger('tipser')->notice('Result @message', ['@message' => print_r($result, TRUE)]);
 
